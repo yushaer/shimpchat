@@ -3,12 +3,12 @@ import M from 'materialize-css';
 import firebase from '../Components/Firebase';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import {setUser,login ,set_login_status } from '../Actions/'
+import {setUser,login ,set_login_status,setRedirectionUrl } from '../Actions/'
 class Login extends React.Component{
     constructor(props){
         super(props);
         this.signIn=this.signIn.bind(this);
-        this.state={loggedIn:false}
+        this.state={loggedIn:false,error:""}
 
     }
     componentDidMount() {
@@ -17,12 +17,26 @@ class Login extends React.Component{
         firebase.auth().onAuthStateChanged(function(user) {
             console.log("hi")
             if (user) {
+
               // User is signed in.
-            
+              if(user.emailVerified){
+              const state= Object.assign(that.state,that.props)
+             
+              that.setState(state)
              
               var user = firebase.auth().currentUser;
               that.props.dispatch(setUser(user));
               that.props.dispatch(login(true));
+              }
+              else{
+                that.state.error="Please verify your email";
+                firebase.auth().signOut().then(function() {
+                
+                    // Sign-out successful.
+                  }).catch(function(error) {
+                    // An error happened.
+                  });
+              }
               
             //   that.state.loggedIn=true;
             //   that.setState(that.state);
@@ -42,9 +56,21 @@ class Login extends React.Component{
         const that = this;
         firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
             var user = firebase.auth().currentUser;
+            console.log(user.emailVerified)
+            if(user.emailVerified){
             var name=document.getElementById("name").value;
-            that.props.dispatch(setUser(user));
-            that.props.dispatch(login(true));
+          //  that.props.dispatch(setUser(user));
+           // that.props.dispatch(login(true));
+            }
+            else{
+                that.state.error="Please verify your email";
+                firebase.auth().signOut().then(function() {
+                
+                    // Sign-out successful.
+                  }).catch(function(error) {
+                    // An error happened.
+                  });
+            }
             //   that.state.loggedIn=true;
             //   that.setState(that.state);
 
@@ -55,7 +81,7 @@ class Login extends React.Component{
               var errorCode = error.code;
               var errorMessage = error.message;
               // ...
-              console.log(errorMessage)
+             // console.log(errorMessage)
               that.state.error=errorMessage;
               that.setState(that.state);
            //   console.log(this.state.error);
@@ -65,31 +91,32 @@ class Login extends React.Component{
 
     render(){
         console.log("logged in")
-        if(this.props.logged_in){
-            console.log("logged in")
-            return (<Redirect to="/shimpchat" />);
+        if(this.props.session.logged_in){
+            console.log(this.props.session)
+            return (<Redirect to={this.props.session.redirect_url} />);
         }else{
             const btn_style={
                 "backgroundColor":"#fff",
                 color:"#212121"
             }
             return(
-            <div class="container">
-                <div class="card">
+            <div className="container">
+                <div className="card">
                                 <h1 className="header center black-text">Login</h1>
                                 <hr></hr>
-                                <div className="card-content white-text">
+                                <div className="card-content red-text">
+                                    <p id="error">{this.state.error}</p>
                                 <form>
                                     <div className="row">
                                         <div className="input-field col s12">
                                         <input id="email" type="email" className="validate"/>
-                                        <label for="email">Email</label>
+                                        <label htmlFor="email">Email</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                         <input id="password" type="password" className="validate"/>
-                                        <label for="password">password</label>
+                                        <label htmlFor="password">password</label>
                                         </div>
                                     </div>
                                     <div className="center">
@@ -111,9 +138,7 @@ class Login extends React.Component{
     }
 }
 function mapStateToProps(state) {
-    return {
-      user: state.user,
-      logged_in:state.logged_in
-    };
+    console.log(state)
+    return state;
   }
 export default connect(mapStateToProps)(Login)

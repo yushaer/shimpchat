@@ -3,6 +3,7 @@ import M from 'materialize-css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Home from '../../Home/Home';
 import Login from '../../Login/Login';
+import Profile from '../../Profile-Picture/Profile';
 import Register from '../../Register/Register';
 import firebase from'../Firebase';
 class Navbar extends React.Component{
@@ -53,23 +54,23 @@ class Navbar extends React.Component{
         return(
             <Router>
 
-            <nav class=" blue darken-3">
-                <div class="nav-wrapper">
-                  <a href="#!" class="brand-logo">Logo</a>
-                  <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                  <ul class="right hide-on-med-and-down">
+            <nav className=" blue darken-3">
+                <div className="nav-wrapper">
+                  <a href="#!" className="brand-logo">Logo</a>
+                  <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                  <ul className="right hide-on-med-and-down">
                     <li><Link to={'/shimpchat'}>home</Link> </li>
-                    <li><Link to={'/login'}>login</Link></li>
+                    {!this.state.loggedIn?( <li><Link to={'/login'}>login</Link></li>):""}
                     <li><Link to={'/Register'}>Register</Link></li>
                  
-                    <li><a href="mobile.html">Mobile</a></li>
+                    <li><Link to={'/profile-picture'}>Profile</Link></li>
                     {!this.state.loggedIn?"":( <li><a href="" onClick={this.handleLogOut}>logout</a></li>) }
                    
                   </ul>
                 </div>
               </nav>
             
-              <ul class="sidenav" id="mobile-demo">
+              <ul className="sidenav" id="mobile-demo">
               <li><Link to={'/shimpchat'}>home</Link> </li>
                     <li><Link to={'/login'}>login</Link></li>
                 <li><a href="collapsible.html">Javascript</a></li>
@@ -78,6 +79,7 @@ class Navbar extends React.Component{
               <Switch>
               <Route exact path='/shimpchat' component={Home} />
               <Route path='/login' component={Login} />
+              <Route path='/profile-picture' component={Profile} />
               <Route path='/Register' component={Register} />
           </Switch>
 

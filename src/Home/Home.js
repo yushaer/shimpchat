@@ -5,7 +5,7 @@ import firebase from '../Components/Firebase';
 import "firebase/firestore";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import {setUser,login ,get_user,set_login_status } from '../Actions/'
+import {setUser,login ,get_user,set_login_status,setRedirectionUrl } from '../Actions/'
 import Message from '../Components/Message/Message';
 class Home extends React.Component{
     constructor(props){
@@ -31,11 +31,11 @@ class Home extends React.Component{
         db.collection("messages").add({
             Name:this.props.user.displayName,
             message:msg,
-            user_id:this.state.user.uid,
+            user_id:this.props.user.user_id,
             created:firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
+            //console.log("Document written with ID: ", docRef.id);
             var objDiv = document.getElementById("message_div");
 objDiv.scrollTop = objDiv.scrollHeight;
         })
@@ -58,11 +58,11 @@ objDiv.scrollTop = objDiv.scrollHeight;
     }
     componentDidMount (){
         
-        console.log("t" +this.state)
+        //console.log("t" +this.state)
         this.props.dispatch(set_login_status())
         this.props.dispatch(get_user());
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("test")
+            //console.log("test")
             var elems = document.querySelectorAll('.parallax');
             var instances = M.Parallax.init(elems, 0);
           });
@@ -80,16 +80,17 @@ objDiv.scrollTop = objDiv.scrollHeight;
       
         
         const state= Object.assign(that.state,that.props)
-        state.logged_in=that.props.logged_in;
+        state.session.logged_in=that.props.session.logged_in;
+      //  console.log(state)
         that.setState(state)
-        console.log("t" +this.state)
+     //  console.log(that.state.session.logged_in)
       
           var db = firebase.firestore();
           db.collection("messages").orderBy("created").onSnapshot(function(querySnapshot) {
         var messages = [];
         querySnapshot.forEach(function(doc) {
-            messages.push({"name":doc.data().Name,"message":doc.data().message,"created":doc.data().created});
-            
+            messages.push({id: doc.id,user_id:doc.data().user_id,"name":doc.data().Name,"message":doc.data().message,"created":doc.data().created});
+           
         });
        
         that.state.messages=messages;
@@ -106,12 +107,12 @@ objDiv.scrollTop = objDiv.scrollHeight;
     
     componentDidUpdate(prevProps) {
         
-        if(this.props.logged_in!=prevProps.logged_in||prevProps.user.displayName!=this.state.user.displayName ){
+        if(this.props.session.logged_in!=prevProps.session.logged_in||prevProps.user.displayName!=this.state.user.displayName ){
           
             const state= Object.assign(this.state,this.props)
     
             this.setState(state)
-            console.log(this.state)
+            //console.log(this.state)
         }
       
       
@@ -119,7 +120,8 @@ objDiv.scrollTop = objDiv.scrollHeight;
         
     }
     render(){
-        if(this.state.logged_in===true){
+        if(this.props.session.logged_in===true){
+           // console.log(this.props.session.logged_in)
             const paralax_style={
                 transform: "translate3d(-50%, 355.605px, 0px)",
                 opacity: 1
@@ -154,10 +156,11 @@ objDiv.scrollTop = objDiv.scrollHeight;
               
                     {this.state.messages.map( (item)=>{
                         const msg=item.message;
-                  
+                            
                         
                         return(
-                            <Message name={item.name} message ={item.message} date={(<Moment format="YYYY/MM/DD hh:mm:ss">
+
+                            <Message key= {item.id} name={item.name} user_id={item.user_id} message ={item.message} date={(<Moment format="YYYY/MM/DD hh:mm:ss">
                             {item.created!=null? item.created.toDate(" HH:mm:ss"):""}
                               </Moment>)}/>
      
@@ -194,13 +197,14 @@ objDiv.scrollTop = objDiv.scrollHeight;
             )
         }
         else{
+            this.props.dispatch(setRedirectionUrl("/shimpchat"))
             return (<Redirect to="/login" />);
         }
          
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
+  //  console.log(state)
     return state;
   }
 export default connect(mapStateToProps)(Home)

@@ -5,6 +5,9 @@ function UserReducer(state=initalState,action){
         case 'setUser':
             return  action.payload
             break;
+        case 'getdefaultprofileurl':
+            return [...state,action.payload]
+            break
     
         default:
             return state;

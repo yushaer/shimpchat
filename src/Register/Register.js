@@ -1,6 +1,7 @@
 import React from 'react';
 import M from 'materialize-css';
 import firebase from '../Components/Firebase';
+import 'firebase/storage'; 
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import {setUser,login  } from '../Actions/'
@@ -21,21 +22,7 @@ class Register extends React.Component{
              
               var user = firebase.auth().currentUser;
               var name=document.getElementById("name").value;
-              var name=document.getElementById("name").value;
-
-                user.updateProfile({
-                    displayName: name
-                  }).then(function() {
-                  
-                      
-                    //this.props.dispatch(login(true));
-                    
-                
-                    // window.location.href("localhost:3000/")
-                    // Update successful.
-                  }).catch(function(error) {
-                    // An error happened.
-                  })
+              
            
 
           
@@ -56,21 +43,58 @@ class Register extends React.Component{
             firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
               var user = firebase.auth().currentUser;
               var name=document.getElementById("name").value;
+              user.sendEmailVerification();
+              var storage = firebase.storage();
 
-                user.updateProfile({
-                    displayName: name
-                  }).then(function() {
+              
+                  var storageRef = storage.ref();
                   
-                      
-                    //this.props.dispatch(login(true));
-                    that.state.loggedIn=true;
-                    that.setState(that.state);
-                    console.log("usern" + user.displayName)
-                    // window.location.href("localhost:3000/")
-                    // Update successful.
-                  }).catch(function(error) {
-                    // An error happened.
+                  
+                  
+                  // Create a child reference
+                  storageRef.child('images/default-avatar.png').getDownloadURL().then(function(url) {
+                    var db = firebase.firestore();
+            
+                    db.collection("users").doc(user.uid).set({
+                      displayName:name,  
+                        user_id:user.uid,
+                        photoURL:url,
+                        created:firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                    .then(function(docRef) {
+                       // console.log("Document written with ID: ", docRef.id);
+                        user.updateProfile({
+                          displayName: name,
+                          photoURL:url
+                        }).then(function() {
+                        
+                            
+                          //this.props.dispatch(login(true));
+                         // that.state.loggedIn=true;
+                         
+                          //that.setState(that.state);
+                          firebase.auth().signOut().then(function() {
+                          
+                            // Sign-out successful.
+                          }).catch(function(error) {
+                            // An error happened.
+                          });
+                          console.log("usern" + user.displayName)
+                          window.location.href="/login"
+                          // window.location.href("localhost:3000/")
+                          // Update successful.
+                        }).catch(function(error) {
+                          // An error happened.
+                        })
+     
+                    })
+                    .catch(function(error) {
+                        console.error("Error adding document: ", error);
+                    });
+                   
                   })
+              
+                
                
             }).catch(function(error) {
                 // Handle Errors here.

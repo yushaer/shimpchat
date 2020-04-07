@@ -1,4 +1,5 @@
 import firebase from '../Components/Firebase';
+import "firebase/firestore";
 
 export function setUser(user){
     return {type:"setUser",payload:user}
@@ -11,20 +12,49 @@ export function login(loggin){
         return {type:"logout",payload:false};
     }
 }
+export function setRedirectionUrl(url){
+    
+        return {type:"set_redirect_url",payload:url}
+    
+    
+    
+}
+// export const getDefaultProfileUrl  = () => async dispatch => {
+//     var storage = firebase.storage();
+
+//     // Create a storage reference from our storage service
+//     var storageRef = storage.ref();
+    
+    
+    
+//     // Create a child reference
+//     storageRef.child('images/default-avatar.png').getDownloadURL().then(function(url) {
+
+//                dispatch({type:"getdefaultprofileurl",payload:{imageurl:url})
+//     })
+
+
+// }
 export const set_login_status  = () => async dispatch => {
     try{
        firebase.auth().onAuthStateChanged(function(user) {
         
             if (user) {
             // User is signed in.
-            
-            var user = firebase.auth().currentUser;
-        
-          
-        
-            dispatch({type:"login",payload:true})
+            console.log(user.emailVerified)
+                if(user.emailVerified){
+                
+                var user = firebase.auth().currentUser;
             
             
+            
+                dispatch({type:"login",payload:true})
+                
+                }
+                else{
+                    dispatch( {type:"logout",payload:false})
+                }
+
         
             } else {
             // No user is signed in.that.state.loggedIn=true;
@@ -42,12 +72,16 @@ export const get_user  = () => async dispatch => {
         
             if (user) {
             // User is signed in.
-            
-            var user = firebase.auth().currentUser;
+            var db = firebase.firestore();
+            db.collection("users").doc(user.uid)
+            .onSnapshot(function(doc) {
+                console.log("Current data: ", doc.data());
+                dispatch({type:"setUser",payload:doc.data()})
+            });
         
           
         
-            dispatch({type:"setUser",payload:user})
+          
             
             
         

@@ -1,17 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import firebase from '../Firebase';
+import "firebase/firestore";
 class Message extends React.Component{
     constructor(props){
         super(props);
+        this.state={photoURL:""}
     }
     render(){
         let left;
         let right;
+        var db = firebase.firestore();
+        var docRef = db.collection("users").doc(this.props.user_id);
+       const that =this;
+        docRef.get().then(function(doc) {
+           
+               // console.log("Document data:", doc.data());
+                that.setState({photoURL:doc.data().photoURL})
+               
+            
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+        if (this.props.user_id!=this.props.user.user_id) {
       
-        if (this.props.name!=this.props.user.displayName) {
          left =(<div className="name ">
                     
-            <img src={require('../Images/simpBack.png')} style={{width:"40px"}} alt="" className="circle  z-depth-4"></img><br></br>
+            <img src={this.state.photoURL} style={{width:"40px"}} alt="" className="circle  z-depth-4"></img><br></br>
             <span className="title ">{this.props.name}</span>
         
             </div>);
@@ -19,10 +34,10 @@ class Message extends React.Component{
         else{
             left ="";
         }
-        if (this.props.name==this.props.user.displayName) {
+        if (this.props.user_id==this.props.user.user_id) {
             right =(<div className="name">
                        
-               <img src={require('../Images/simpBack.png')} style={{width:"40px"}} alt="" className="circle  z-depth-4"></img><br></br>
+               <img src={this.props.user.photoURL} style={{width:"40px"}} alt="" className="circle  z-depth-4"></img><br></br>
                <span className="title ">{this.props.name}</span>
            
                </div>);
@@ -35,7 +50,7 @@ class Message extends React.Component{
                 
                  
                         
-                        <div className={this.props.name==this.props.user.displayName?"box-gray-self ":"box-gray "}>
+                        <div className={this.props.user_id==this.props.user.user_id?"box-gray-self ":"box-gray "}>
                         {left}
                         
                         <div className="message-body z-depth-4">
@@ -60,7 +75,7 @@ class Message extends React.Component{
     }
 }
 function mapStateToProps(state) {
-    console.log(state)
+   // console.log(state)
     return state;
   }
 export default connect(mapStateToProps)(Message)
