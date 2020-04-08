@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/shimpchat/precache-manifest.d0c1cef23536853f78114ae4d79207c1.js"
+  "/shimpchat/precache-manifest.b61a352e804f5616b24facd19e7b4c05.js"
 );
 
 self.addEventListener('message', (event) => {
