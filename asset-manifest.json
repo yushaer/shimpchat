@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/shimpchat/static/css/main.8c7ff731.chunk.css",
+    "main.js": "/shimpchat/static/js/main.969ba99c.chunk.js",
+    "main.js.map": "/shimpchat/static/js/main.969ba99c.chunk.js.map",
+    "runtime-main.js": "/shimpchat/static/js/runtime-main.f7d1ff1c.js",
+    "runtime-main.js.map": "/shimpchat/static/js/runtime-main.f7d1ff1c.js.map",
+    "static/js/2.34aaca37.chunk.js": "/shimpchat/static/js/2.34aaca37.chunk.js",
+    "static/js/2.34aaca37.chunk.js.map": "/shimpchat/static/js/2.34aaca37.chunk.js.map",
+    "index.html": "/shimpchat/index.html",
+    "precache-manifest.0f7bdf975561867c378333012f67625c.js": "/shimpchat/precache-manifest.0f7bdf975561867c378333012f67625c.js",
+    "service-worker.js": "/shimpchat/service-worker.js",
+    "static/css/main.8c7ff731.chunk.css.map": "/shimpchat/static/css/main.8c7ff731.chunk.css.map",
+    "static/js/2.34aaca37.chunk.js.LICENSE.txt": "/shimpchat/static/js/2.34aaca37.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/shimpchat/static/media/logo.5d5d9eef.svg",
+    "static/media/simpBack.png": "/shimpchat/static/media/simpBack.be90594a.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f7d1ff1c.js",
+    "static/js/2.34aaca37.chunk.js",
+    "static/css/main.8c7ff731.chunk.css",
+    "static/js/main.969ba99c.chunk.js"
+  ]
+}
