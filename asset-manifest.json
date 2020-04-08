@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/shimpchat/static/css/main.8c7ff731.chunk.css",
-    "main.js": "/shimpchat/static/js/main.969ba99c.chunk.js",
-    "main.js.map": "/shimpchat/static/js/main.969ba99c.chunk.js.map",
+    "main.js": "/shimpchat/static/js/main.c32665da.chunk.js",
+    "main.js.map": "/shimpchat/static/js/main.c32665da.chunk.js.map",
     "runtime-main.js": "/shimpchat/static/js/runtime-main.f7d1ff1c.js",
     "runtime-main.js.map": "/shimpchat/static/js/runtime-main.f7d1ff1c.js.map",
     "static/js/2.34aaca37.chunk.js": "/shimpchat/static/js/2.34aaca37.chunk.js",
     "static/js/2.34aaca37.chunk.js.map": "/shimpchat/static/js/2.34aaca37.chunk.js.map",
     "index.html": "/shimpchat/index.html",
-    "precache-manifest.0f7bdf975561867c378333012f67625c.js": "/shimpchat/precache-manifest.0f7bdf975561867c378333012f67625c.js",
+    "precache-manifest.d0c1cef23536853f78114ae4d79207c1.js": "/shimpchat/precache-manifest.d0c1cef23536853f78114ae4d79207c1.js",
     "service-worker.js": "/shimpchat/service-worker.js",
     "static/css/main.8c7ff731.chunk.css.map": "/shimpchat/static/css/main.8c7ff731.chunk.css.map",
     "static/js/2.34aaca37.chunk.js.LICENSE.txt": "/shimpchat/static/js/2.34aaca37.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.f7d1ff1c.js",
     "static/js/2.34aaca37.chunk.js",
     "static/css/main.8c7ff731.chunk.css",
-    "static/js/main.969ba99c.chunk.js"
+    "static/js/main.c32665da.chunk.js"
   ]
 }
