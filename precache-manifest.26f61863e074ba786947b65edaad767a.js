@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "833671732836a26a865cd9807692c340",
+    "revision": "7755957014b2daca551599816bff7859",
     "url": "/shimpchat/index.html"
   },
   {
-    "revision": "513733e6cfcb859ac688",
+    "revision": "df9112c039b95b5b8b47",
     "url": "/shimpchat/static/css/main.8c7ff731.chunk.css"
   },
   {
-    "revision": "40e0a39bc4df2a576028",
-    "url": "/shimpchat/static/js/2.34aaca37.chunk.js"
+    "revision": "506a598fafef6a04dfb2",
+    "url": "/shimpchat/static/js/2.fa747403.chunk.js"
   },
   {
     "revision": "3b60cce9eb220e0eed2b11c719a93ed7",
-    "url": "/shimpchat/static/js/2.34aaca37.chunk.js.LICENSE.txt"
+    "url": "/shimpchat/static/js/2.fa747403.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "513733e6cfcb859ac688",
-    "url": "/shimpchat/static/js/main.83370ca0.chunk.js"
+    "revision": "df9112c039b95b5b8b47",
+    "url": "/shimpchat/static/js/main.6cf84143.chunk.js"
   },
   {
     "revision": "75efe288f3180ae4ec86",
