@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a6764b777da392e319951cc20826a3ca",
+    "revision": "833671732836a26a865cd9807692c340",
     "url": "/shimpchat/index.html"
   },
   {
-    "revision": "3a9f74bb8f0917ec747b",
+    "revision": "513733e6cfcb859ac688",
     "url": "/shimpchat/static/css/main.8c7ff731.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/shimpchat/static/js/2.34aaca37.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3a9f74bb8f0917ec747b",
-    "url": "/shimpchat/static/js/main.be9baa1e.chunk.js"
+    "revision": "513733e6cfcb859ac688",
+    "url": "/shimpchat/static/js/main.83370ca0.chunk.js"
   },
   {
     "revision": "75efe288f3180ae4ec86",
