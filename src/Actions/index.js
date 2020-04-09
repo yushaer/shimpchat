@@ -66,6 +66,7 @@ export const set_login_status  = () => async dispatch => {
         console.log(e)
       }
 }
+
 export const get_user  = () => async dispatch => {
     try{
        firebase.auth().onAuthStateChanged(function(user) {
@@ -79,6 +80,42 @@ export const get_user  = () => async dispatch => {
                 dispatch({type:"setUser",payload:doc.data()})
             });
         
+          
+        
+          
+            
+            
+        
+            }
+        });
+    }
+    catch (e) {
+        console.log(e)
+      }
+}
+export const get_message  = () => async dispatch => {
+    try{
+       firebase.auth().onAuthStateChanged(function(user) {
+        
+            if (user) {
+            // User is signed in.
+            var db = firebase.firestore();
+            db.collection("messages").orderBy("created").onSnapshot(function(querySnapshot) {
+                var messages = [];
+                querySnapshot.forEach(function(doc) {
+                    messages.push({id: doc.id,user_id:doc.data().user_id,"name":doc.data().Name,"message":doc.data().message,"created":doc.data().created});
+                    
+                });
+                
+                
+                var objDiv = document.getElementById("message_div");
+                objDiv.scrollTop = objDiv.scrollHeight;
+                dispatch({type:"get_messages",payload:messages})
+           
+        
+          
+          });
+          
           
         
           

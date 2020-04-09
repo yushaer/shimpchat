@@ -5,7 +5,7 @@ import firebase from '../Components/Firebase';
 import "firebase/firestore";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import {setUser,login ,get_user,set_login_status,setRedirectionUrl } from '../Actions/'
+import {setUser,login ,get_user,set_login_status,setRedirectionUrl,get_message } from '../Actions/'
 import Message from '../Components/Message/Message';
 class Home extends React.Component{
     constructor(props){
@@ -61,6 +61,7 @@ objDiv.scrollTop = objDiv.scrollHeight;
         //console.log("t" +this.state)
         this.props.dispatch(set_login_status())
         this.props.dispatch(get_user());
+        this.props.dispatch(get_message());
         document.addEventListener('DOMContentLoaded', function() {
             //console.log("test")
             var elems = document.querySelectorAll('.parallax');
@@ -84,24 +85,28 @@ objDiv.scrollTop = objDiv.scrollHeight;
       //  console.log(state)
         that.setState(state)
      //  console.log(that.state.session.logged_in)
-      
-          var db = firebase.firestore();
-          db.collection("messages").orderBy("created").onSnapshot(function(querySnapshot) {
-        var messages = [];
-        querySnapshot.forEach(function(doc) {
-            messages.push({id: doc.id,user_id:doc.data().user_id,"name":doc.data().Name,"message":doc.data().message,"created":doc.data().created});
-           
-        });
-       
-        that.state.messages=messages;
-        that.setState(that.state)
-        var objDiv = document.getElementById("message_div");
-        objDiv.scrollTop = objDiv.scrollHeight;
-       
-     
+      if(this.props.session.logged_in){
+//         var db = firebase.firestore();
 
-    
-    });
+//         db.collection("messages").orderBy("created").onSnapshot(function(querySnapshot) {
+//         var messages = [];
+//         querySnapshot.forEach(function(doc) {
+//             messages.push({id: doc.id,user_id:doc.data().user_id,"name":doc.data().Name,"message":doc.data().message,"created":doc.data().created});
+            
+//         });
+        
+//         that.state.messages=messages;
+//         that.setState(that.state)
+//         var objDiv = document.getElementById("message_div");
+//         objDiv.scrollTop = objDiv.scrollHeight;
+        
+   
+
+  
+//   });
+          
+      }
+          
 
     }
     
@@ -154,7 +159,7 @@ objDiv.scrollTop = objDiv.scrollHeight;
                     <div className="messages" id="message_div">
                     <br></br>
               
-                    {this.state.messages.map( (item)=>{
+                    {this.props.messages.map( (item)=>{
                         const msg=item.message;
                             
                         
@@ -197,7 +202,7 @@ objDiv.scrollTop = objDiv.scrollHeight;
             )
         }
         else{
-            this.props.dispatch(setRedirectionUrl("/shimpchat"))
+            this.props.dispatch(setRedirectionUrl("/"))
             return (<Redirect to="/login" />);
         }
          

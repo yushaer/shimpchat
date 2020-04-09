@@ -1,5 +1,5 @@
 
-const initalState={"logged_in":false,"redirect_url":"/shimpchat"};
+const initalState={"logged_in":false,"redirect_url":"/"};
 function SessionReducer(state=initalState,action){
     switch (action.type) {
         case 'login':
