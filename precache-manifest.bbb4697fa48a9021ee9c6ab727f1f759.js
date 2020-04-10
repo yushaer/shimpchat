@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b5b657e2249495d364efee16e3908a87",
+    "revision": "d8f5ad3c15c48538e4e1658eeaac7b8a",
     "url": "/shimpchat/index.html"
   },
   {
